@@ -7,7 +7,7 @@ package main
 
 // Imports des bibliothèques nécessaires
 import (
-	"database/sql" // permet d'interagir avec la base de données
+	"database/sql" // permet de gérer la connexion et les requêtes SQL
 	"fmt"          // permet l'affichage et la saisie en console
 	"log"          // permet d'afficher les messages d'erreur
 	"strings"      // permet de comparer les chaînes de caractères
@@ -143,52 +143,5 @@ for {
 		fmt.Printf("Félicitations %s ! Vous avez validé tous les thèmes du quiz et gagnez le clavier d'or.\n", nomJoueur)
 		break
 	}	
-}
+}			
 }	
-
-// Fonction pour charger les thèmes depuis la base de données
-func loadThemes(db *sql.DB) ([]theme, error) {
-
-	// Requête SQL pour récupérer les thèmes
-	rows, err := db.Query("SELECT id, nom FROM themes")
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var themes []theme
-
-	// Parcours des résultats de la requête
-	for rows.Next() {
-		var t theme
-		if err := rows.Scan(&t.ID, &t.Nom); err != nil {
-			return nil, err
-		}
-		themes = append(themes, t)
-	}
-
-	return themes, rows.Err()
-}
-
-// Fonction pour charger les questions d'un thème depuis la base de données
-func loadQuestions(db *sql.DB, themeID int) ([]question, error) {
-    rows, err := db.Query(`
-        SELECT id, theme_id, question, choixA, choixB, choixC, choixD, bonne
-        FROM questions
-        WHERE theme_id = ?`, themeID)
-    if err != nil {
-        return nil, err
-    }
-    defer rows.Close()
-
-    var questions []question
-    for rows.Next() {
-        var q question
-        if err := rows.Scan(&q.ID, &q.ThemeID, &q.Question,
-            &q.ChoixA, &q.ChoixB, &q.ChoixC, &q.ChoixD, &q.Reponse); err != nil {
-            return nil, err
-        }
-        questions = append(questions, q)
-    }
-    return questions, rows.Err()
-}
