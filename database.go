@@ -14,7 +14,7 @@ func connectDB() (*sql.DB, error) {
 	// Ouverture de la connexion à la base
 	// -------------------------------------------------
 	// Format : utilisateur:motdepasse@tcp(ip:port)/nomBase
-	// Ici on utilise 127.0.0.1 pour forcer le TCP/IP
+	// Ici on utilise 127.0.0.1 pour forcer le TCP/IP : Transport Control Protocol/Internet Protocol
 	db, err := sql.Open("mysql", "root:cesi@tcp(127.0.0.1:3306)/datagouvschema")
 	if err != nil {
 		// Retourne nil et l'erreur si la connexion échoue
