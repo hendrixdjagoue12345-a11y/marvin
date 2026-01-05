@@ -44,6 +44,19 @@ var nomJoueur string
 fmt.Print("Entrez votre nom : ")
 fmt.Scanln(&nomJoueur)
 
+result, err :=db.Exec(
+	"INSERT INTO joueurs (nom,date_connexion) VALUES (?, NOW())",
+	nomJoueur,
+)
+if err != nil {
+	log.Fatal("Erreur insertion joueur:", err)
+}
+ 
+joueurID, err := result.LastInsertId()
+if err != nil {
+	log.Fatal("Erreur récupération ID joueur:", err)
+}
+
 // chargement des thèmes depuis la base de données
 themes, err := loadThemes(db)
 if err != nil {
@@ -61,7 +74,7 @@ for {
 	// Affichage des thèmes disponibles
     fmt.Printf("\n%s, choisis un thème :\n", nomJoueur) 
 	for _, t := range themes {
-		// on affiche uniquement les thèmes non encore validés
+		// on affiche uniquement les thèmes non encore validés, ou cache les thèmes déjà validés
 		if !themesValides[t.ID] {
 			fmt.Printf("%d - %s\n", t.ID, t.Nom)
 		}
@@ -127,6 +140,17 @@ for {
 		}
 		// Affichage du score final
 		fmt.Printf("\n%s, votre score pour le thème est %d/%d\n", nomJoueur, score, len(questions))
+
+		// Enregistre le score du joueur pour ce thème dans la base de données
+		_, err := db.Exec(
+			"INSERT INTO parties (joueur_id, theme_id, score, date_partie) VALUES (?, ?, ?, NOW())",
+			joueurID,
+			choixTheme,
+			score, // score final du thème
+		)
+		if err != nil {
+			log.Fatal("Erreur insertion partie:", err)
+		}
 
 		// Si le score est suffisant, on valide le thème
 		if score >= 3 {
