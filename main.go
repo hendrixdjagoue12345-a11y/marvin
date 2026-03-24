@@ -1,23 +1,19 @@
-// Programme principal du quiz
-// Ce programmme permet à un utilisateur de jouer à un quiz en console
-// Les questions et thèmes sont stockés dans une base de données MySQL
- 
+
 package main
  
 // Imports des bibliothèques nécessaires
 import (
-	"database/sql" // permet de gérer la connexion et les requêtes SQL
-	"fmt"          // permet l'affichage et la saisie en console
-	"log"          // permet d'afficher les messages d'erreur
-	"strings"      // permet de comparer les chaînes de caractères
+	"database/sql" 
+	"fmt"          
+	"log"        
+	"strings"    
  
-	// Driver MySQL nécessaire pour se connecter à la base de données
+	
 	_ "github.com/go-sql-driver/mysql"
 )
  
-// Renommé de main() → mainConsole() ← SEUL CHANGEMENT dans ce fichier
 func mainConsole() {
-	// Connexion à la base de données
+	
 	db, err := sql.Open("mysql", "root:cesi@tcp(127.0.0.1:3306)/datagouvschema")
 	if err != nil {
 		log.Fatal("Erreur connexion MySQL:", err)
