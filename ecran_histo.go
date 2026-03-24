@@ -28,7 +28,7 @@ func (qa *quizApp) showHistoriqueScreen() {
 	if len(hist) == 0 {
 		rows = append(rows, widget.NewLabel("Aucune partie jouée pour l'instant."))
 	} else {
-		// En-tête
+		// entete du tableau
 		rows = append(rows,
 			container.New(layout.NewGridLayout(3),
 				widget.NewLabelWithStyle("Thème", fyne.TextAlignLeading, fyne.TextStyle{Bold: true}),
