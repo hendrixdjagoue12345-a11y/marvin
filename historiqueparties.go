@@ -5,10 +5,7 @@ import (
 	"fmt"
 )
  
-// ============================================================
-// showHistory — VERSION CONSOLE (conservée telle quelle)
-// Affiche l'historique avec fmt.Println
-// ============================================================
+// historique console
 func showHistory(db *sql.DB, joueurID int64) error {
 	rows, err := db.Query(
 		"SELECT score, date_partie FROM parties WHERE joueur_id = ? ORDER BY date_partie DESC",
@@ -33,21 +30,16 @@ func showHistory(db *sql.DB, joueurID int64) error {
 	return rows.Err()
 }
  
-// ============================================================
-// historiquePartie — structure pour la version Fyne
-// Représente une ligne du tableau historique
-// ============================================================
+// structure historique
+
 type historiquePartie struct {
-	Theme string // nom du thème  ex: "Histoire"
-	Score int    // score obtenu  ex: 4
-	Date  string // date          ex: "2024-01-15 14:30:00"
+	Theme string 
+	Score int    
+	Date  string 
 }
  
-// ============================================================
-// loadHistorique — VERSION FYNE
-// Retourne la liste des parties au lieu de les afficher
-// Utilisée par ecran_histo.go
-// ============================================================
+// historique fyne
+
 func loadHistorique(db *sql.DB, joueurID int64) ([]historiquePartie, error) {
 	rows, err := db.Query(`
 		SELECT t.nom, p.score, p.date_partie
