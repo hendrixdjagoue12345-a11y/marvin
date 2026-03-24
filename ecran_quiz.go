@@ -74,7 +74,7 @@ func (qa *quizApp) showQuizScreen(t theme) {
 
 	validateBtn.OnTapped = func() {
 		if attendReponse {
-			// — PHASE 1 : le joueur vient de choisir, on vérifie la réponse —
+			// on vérifie la réponse
 			selected := choixGroup.Selected
 			if selected == "" {
 				feedbackLabel.SetText("  Choisis une réponse !")
@@ -95,7 +95,7 @@ func (qa *quizApp) showQuizScreen(t theme) {
 			}
 
 			currentIdx++
-			attendReponse = false // on attend maintenant que le joueur passe à la suite
+			attendReponse = false 
 
 			if currentIdx >= len(questions) {
 				validateBtn.SetText("Voir les résultats →")
@@ -104,7 +104,7 @@ func (qa *quizApp) showQuizScreen(t theme) {
 			}
 
 		} else {
-			// — PHASE 2 : le joueur veut passer à la suite —
+			// question suivante
 			showQuestion()
 		}
 	}
