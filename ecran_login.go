@@ -12,8 +12,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
- 
-// makeTitle : fonction utilitaire réutilisée sur tous les écrans
+ // titre utilisé sur tous les ecrans
 func makeTitle(text string) *canvas.Text {
 	t := canvas.NewText(text, color.NRGBA{R: 0, G: 120, B: 215, A: 255})
 	t.TextSize = 26
@@ -28,7 +27,6 @@ func (qa *quizApp) showLoginScreen() {
 	sub := canvas.NewText("Connecte-toi pour commencer", color.NRGBA{R: 80, G: 80, B: 80, A: 255})
 	sub.Alignment = fyne.TextAlignCenter
  
-	// Remplace : fmt.Print("Entrez votre nom") + fmt.Scanln(&nomJoueur)
 	nameEntry := widget.NewEntry()
 	nameEntry.SetPlaceHolder("Ton prénom ou pseudo...")
  
@@ -44,34 +42,34 @@ func (qa *quizApp) showLoginScreen() {
  
 		statusLabel.SetText("Connexion en cours...")
  
-		// Même logique que mainConsole()
-		db, err := connectDB() // fonction dans db.go
+		// connexion a la bdd
+		db, err := connectDB() 
 		if err != nil {
 			dialog.ShowError(fmt.Errorf("Impossible de joindre MySQL :\n%v", err), qa.window)
 			statusLabel.SetText("")
 			return
 		}
  
-		joueurID, err := insertJoueur(db, nom) // fonction dans db_fyne.go
+		joueurID, err := insertJoueur(db, nom) 
 		if err != nil {
 			dialog.ShowError(fmt.Errorf("Erreur insertion joueur :\n%v", err), qa.window)
 			return
 		}
  
-		themes, err := loadThemes(db) // fonction dans db.go
+		themes, err := loadThemes(db) 
 		if err != nil {
 			dialog.ShowError(fmt.Errorf("Erreur chargement thèmes :\n%v", err), qa.window)
 			return
 		}
  
-		// Stocker dans la structure globale
+		// on stocke tout dans la structure
 		qa.db = db
 		qa.joueurID = joueurID
 		qa.nomJoueur = nom
 		qa.themes = themes
 		qa.themesValides = make(map[int]bool)
  
-		// Aller à l'écran suivant
+		// ecran suivant
 		qa.showThemeScreen()
 	})
 	connectBtn.Importance = widget.HighImportance
