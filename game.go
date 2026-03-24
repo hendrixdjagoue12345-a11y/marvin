@@ -1,26 +1,20 @@
 package main
  
-// ============================================================
-// game.go — VERSION CONSOLE (commentée)
-// Le contenu est conservé en commentaire pour référence.
-// La logique du jeu est maintenant dans ecran_quiz.go (Fyne)
-// ============================================================
- 
-
+// version console
 import (
 	"fmt"
 	"strings"
 )
  
-// Fonction principale d'un thème
-// Elle affiche toutes les questions et retourne felicitation vous validez ce thème si le score est suffisant
+// joue un theme et retourne true si validé, false sinon
+// Si le score est suffisant, on valide le thème	
 func jouerTheme(nomJoueur string, questions []question) bool {
 	score := 0
  
 	// parcours des de toutes les questions du thème
 	for _, q := range questions {
  
-		// Affichage de la question et des choix
+		// question et choix 
 		fmt.Printf("\n%s\n", q.Question)
 		fmt.Printf("A. %s\n", q.ChoixA)
 		fmt.Printf("B. %s\n", q.ChoixB)
@@ -32,7 +26,7 @@ func jouerTheme(nomJoueur string, questions []question) bool {
 		fmt.Print("Votre réponse : ")
 		fmt.Scanln(&reponse)
  
-		// Vérification de la réponse (insensible à la casse)
+		// Vérification 
 		if strings.EqualFold(reponse, q.Reponse) {
 			fmt.Println("Bonne réponse !")
 			score++
@@ -41,7 +35,7 @@ func jouerTheme(nomJoueur string, questions []question) bool {
 		}
 	}
  
-	// Affichage du score final
+	// score final
 	fmt.Printf(
 		"\n%s, votre score est %d/%d\n",
 		nomJoueur,
