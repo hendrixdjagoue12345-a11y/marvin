@@ -8,18 +8,18 @@ import (
 	"fyne.io/fyne/v2/app"
 )
  
-// quizApp regroupe toutes les données partagées entre les écrans
+// quizApp c'est la structure principale de l'appli
 type quizApp struct {
 	fyneApp       fyne.App
 	window        fyne.Window
 	db            *sql.DB
 	joueurID      int64
 	nomJoueur     string
-	themes        []theme      // type défini dans models.go
+	themes        []theme      
 	themesValides map[int]bool
 }
  
-// main() — point d'entrée Fyne
+// point d'entrée du programme
 func main() {
 	a := app.New()
 	w := a.NewWindow("Quiz Go · Fyne")
