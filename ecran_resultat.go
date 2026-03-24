@@ -65,19 +65,19 @@ func (qa *quizApp) showResultScreen(t theme, score, total int) {
 	})
 	menuBtn.Importance = widget.HighImportance
 
-	// Tout en vertical, boutons fixes en bas
+	// boutons du bas
 	boutons := container.NewVBox(
 		widget.NewSeparator(),
 		retryBtn,
 		menuBtn,
 	)
 
-	contenu := container.NewVBox(
+	body  := container.NewVBox(
 		title,
 		container.NewCenter(scoreTxt),
 		msg,
 	)
-	scroll := container.NewVScroll(contenu)
+	scroll := container.NewVScroll(body)
 
 	content := container.NewBorder(
 		nil,
