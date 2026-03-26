@@ -63,18 +63,38 @@ func (qa *quizApp) showHistoriqueScreen() {
 	scroll.SetMinSize(fyne.NewSize(660, 320))
  
 	backBtn := widget.NewButton("← Retour", func() {
-		qa.showThemeScreen()
-	})
-	backBtn.Importance = widget.HighImportance
- 
-	content := container.NewVBox(
-		container.NewCenter(title),
-		widget.NewSeparator(),
-		scroll,
-		widget.NewSeparator(),
-		backBtn,
-	)
- 
-	qa.window.SetContent(container.NewPadded(content))
+	qa.showThemeScreen()
+})
+backBtn.Importance = widget.HighImportance
+
+pdfBtn := widget.NewButton("Télécharger PDF", func() {
+	dialog.NewConfirm(
+		"Téléchargement PDF",
+		"Voulez-vous télécharger un PDF de l'historique ?",
+		func(ok bool) {
+			if ok {
+				err := generatePDF(hist, qa.nomJoueur)
+				if err != nil {
+					dialog.ShowError(err, qa.window)
+					return
+				}
+				dialog.ShowInformation("Succès", "PDF généré avec succès.", qa.window)
+			}
+		},
+		qa.window,
+	).Show()
+})
+pdfBtn.Importance = widget.SuccessImportance
+
+buttons := container.NewHBox(backBtn, layout.NewSpacer(), pdfBtn)
+
+content := container.NewVBox(
+	container.NewCenter(title),
+	widget.NewSeparator(),
+	scroll,
+	widget.NewSeparator(),
+	buttons,
+)
+
+qa.window.SetContent(container.NewPadded(content))
 }
- 
