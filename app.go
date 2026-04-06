@@ -5,9 +5,10 @@ import (
 	"database/sql"
  
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/app"	
+
+	_ "github.com/go-sql-driver/mysql"
 )
- 
 // quizApp c'est la structure principale de l'appli
 type quizApp struct {
 	fyneApp       fyne.App
