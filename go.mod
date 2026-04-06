@@ -1,13 +1,15 @@
 module hello
 
-go 1.21
+go 1.21.0
 
 require (
 	fyne.io/fyne/v2 v2.7.3
+	github.com/go-sql-driver/mysql v1.9.3
 	github.com/jung-kurt/gofpdf v1.16.2
 )
 
 require (
+	filippo.io/edwards25519 v1.1.0 // indirect
 	fyne.io/systray v1.12.0 // indirect
 	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
